@@ -16,7 +16,7 @@ Create  topic events2 with 1 replication factor and 4 partitions.
 	/usr/bin/kafka-console-producer --bootstrap-server kafka:9092 --topic events1	
 	
 3. Read the data - create 2 consumers for event1. Show partition number and offset. 
-	Commands: docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic events1 --property print.key=true --property key.separator="," --property print.partition=true --property print.offset=true
+	Commands: docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic events1 --property print.key=true --property print.partition=true --property print.offset=true
 		  docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic events1 --property print.partition=true --property print.offset=true --from-beginning
 4. Send data. Use your Producer API
 SimpleExampleProducer
@@ -24,15 +24,17 @@ SynchronousSimpleProducer
 AsynchronousSimpleProducer
 ExampleProducer --> add arg[0] parameter
 create group of Consumers 
-Commands:
-	docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic events2 --property print.key=true --property key.separator="," --property print.partition=true --property 	print.offset=true --group con1 --from-beginning
-	docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic events2 --property print.key=true --property print.partition=true --property print.offset=true --group con1
 
 5. Run with specifying consumer group and printing the partition
 - from-beginning
 -latest
 
 Check that messages with the same key go to the same partition. Notice, that messages may come in a different order, when they are in different partitions.
+
+Commands:
+	docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic events2 --property print.key=true --property key.separator="," --property print.partition=true --property 	print.offset=true --group con1 --from-beginning
+	docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:9092 --topic events2 --property print.key=true --property print.partition=true --property print.offset=true --group con1
+
 
 6. Delete topic
 	/usr/bin/kafka-topics --bootstrap-server kafka:9092 --topic events2 --delete
